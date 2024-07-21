@@ -9,7 +9,7 @@ connect();
 
 export async function POST(request: NextRequest) {
   try {
-    const reqBody = request.json();
+    const reqBody = await request.json();
     const { username, email, password } = reqBody;
     //validations
     console.log(reqBody);
@@ -18,8 +18,7 @@ export async function POST(request: NextRequest) {
 
     if (user) {
       return NextResponse.json(
-        { error: "user already exist" },
-        { status: 400 }
+        { msg: "user already exist" },
       );
     }
     const salt = await bcryptjs.genSalt(10);
@@ -35,21 +34,19 @@ export async function POST(request: NextRequest) {
     console.log(savedUser);
 
     //VERIFY
-    const verifyUser = await sendEmail({
+    await sendEmail({
       email,
       emailType: "VERIFY",
       userId: savedUser._id,
     });
 
-    //response 
+    //response
     return NextResponse.json({
       message: "User registered successfully",
       success: true,
-      savedUser
-    })
-
-    console.log(verifyUser)
+      savedUser,
+    });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: error.message });
   }
 }

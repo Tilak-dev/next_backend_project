@@ -22,13 +22,13 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
       host: "sandbox.smtp.mailtrap.io",
       port: 2525,
       auth: {
-        user: "9011a2d2e01072", //🔥❌
-        pass: "********8723", // 🔥❌
-      },
+        user: "876031b28db063",
+        pass: "10f4295a7bcad1"
+      }
     });
 
     const mailOption = {
-      from: "tilaksingh@gmail.com",
+      from: "one@gmail.com",
       to: email, // list of receivers
       subject:
         emailType === "VARIFY" ? "verify your email" : "Reset your password", // Subject line
